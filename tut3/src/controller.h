@@ -1,33 +1,34 @@
 #include <time.h>
 
+#include "../../mvc.h"
 #include "model.h"
-#include "mvc.h"
+#include "view.h"
 
 #if !defined(CONTROLLER)
 #define CONTROLLER
 
-class AmpelController : public Controller<Ampel, AmpelView>
+class Controller : public AbstractController<Model, View>
 {
   public:
     clock_t last_time = clock();
     clock_t current_time = clock() - TIME_GREEN * CLOCKS_PER_SEC;
 
-    AmpelController(Ampel ampel, AmpelView ampelView)
+    Controller(Model _model, View _view)
     {
-        model = ampel;
-        view = ampelView;
+        model = _model;
+        view = _view;
     };
     void start();
     void stop(){};
-    void update(bool shouldStop);
+    void update(bool *shouldStop);
 };
 
-void AmpelController::start()
+void Controller::start()
 {
     model.on();
 };
 
-void AmpelController::update(bool shouldStop)
+void Controller::update(bool *shouldStop)
 {
     // bestimme vergangene Zeit seit letztem Aufruf
     current_time = clock();

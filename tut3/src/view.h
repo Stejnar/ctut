@@ -3,7 +3,7 @@
 #include <cstring>
 #include <math.h>
 
-#include "mvc.h"
+#include "../../mvc.h"
 #include "model.h"
 
 using namespace std;
@@ -14,19 +14,19 @@ using namespace std;
 #define ROWS 7
 #define COLS 5
 
-class AmpelView : public View<AmpelState>
+class View : public AbstractView<Ampel>
 {
   private:
     char *matrix2d[ROWS];
 
   public:
-    AmpelView();
-    void render(AmpelState state);
+    View();
+    void render(Ampel state);
 };
 
-AmpelView::AmpelView()
+View::View()
 {
-    ifstream file("..\\ampel.txt");
+    ifstream file("..\\ampel.dat");
 
     int i = 0;
     for (std::string line; getline(file, line);)
@@ -42,7 +42,7 @@ AmpelView::AmpelView()
     file.close();
 };
 
-void AmpelView::render(AmpelState state)
+void View::render(Ampel state)
 {
     if (!state.isOn)
     {

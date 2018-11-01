@@ -1,4 +1,4 @@
-#include "mvc.h"
+#include "../../mvc.h"
 
 #if !defined(MODEL)
 #define MODEL
@@ -12,20 +12,20 @@
 #define TIME_YELLOW 3
 #define TIME_RED 1
 
-class AmpelState : public State
+class Ampel : public State
 {
   public:
     int color;
     bool isOn;
 };
 
-class Ampel : public Model<AmpelState>
+class Model : public AbstractModel<Ampel>
 {
   public:
-    Ampel(){};
-    Ampel(AmpelState ampelState)
+    Model(){};
+    Model(Ampel _state)
     {
-        state = ampelState;
+        state = _state;
     };
     void off();
     void on();
@@ -34,24 +34,24 @@ class Ampel : public Model<AmpelState>
     float time();
 };
 
-void Ampel::on()
+void Model::on()
 {
     state.color = RED;
     state.isOn = true;
 };
 
-void Ampel::off()
+void Model::off()
 {
     state.color = RED;
     state.isOn = false;
 };
 
-void Ampel::setColor(int code)
+void Model::setColor(int code)
 {
     state.color = code;
 };
 
-int Ampel::next()
+int Model::next()
 // bestimme naechste Farbe
 {
     if (!state.isOn)
@@ -69,7 +69,7 @@ int Ampel::next()
     }
 };
 
-float Ampel::time()
+float Model::time()
 // bestimme Schaltzeit je nach farbe
 {
     switch (state.color)

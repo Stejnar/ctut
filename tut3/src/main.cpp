@@ -9,14 +9,14 @@ int main()
     // instanziere Klassen
     AmpelState state;
     Ampel ampel(state);
-    AmpelView view;
+    View view;
     AmpelController ctrl(ampel, view);
 
     ctrl.start();
 
     while (!shouldStop)
     {
-        ctrl.update(shouldStop);
+        ctrl.update(&shouldStop);
     }
 
     return 0;
